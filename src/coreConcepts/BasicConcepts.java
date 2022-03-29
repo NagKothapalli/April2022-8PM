@@ -15,6 +15,7 @@ public class BasicConcepts
 	public int stdNum = 22;
 	protected double marks = 95;
 	private boolean stdResult = true;
+	
 	char stdGrade = 'A'; //default
 //Signature of method/function
 	//Modifier[opt]  ReturnType  Name(){ Body  }

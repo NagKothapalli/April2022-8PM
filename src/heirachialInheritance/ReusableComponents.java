@@ -1,4 +1,4 @@
-package simpleInheritance;
+package heirachialInheritance;
 
 import org.junit.Test;
 
@@ -7,7 +7,7 @@ public class ReusableComponents
 	//********************************************
 	void launchApplication()
 	{
-		System.out.println("RC : Launch Application from RC");
+		System.out.println("RC : Launch Application");
 		//We have to write the required selenium code to launch the application
 	}
 	void loginToApplication() //default

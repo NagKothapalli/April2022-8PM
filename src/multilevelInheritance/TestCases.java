@@ -1,4 +1,4 @@
-package simpleInheritance;
+package multilevelInheritance;
 
 import org.junit.Test;
 //            Base/child       parent/super -> Simple Inheritance

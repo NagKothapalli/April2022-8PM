@@ -1,11 +1,16 @@
-package simpleInheritance;
+package inheritanceByObject;
 
 import org.junit.Test;
 
 public class ReusableComponents
 {
+	public ReusableComponents()
+	{
+		System.out.println("Clear the Data Base");
+		System.out.println("Open Default Browser as Google Chrome");
+	}
 	//********************************************
-	protected void launchApplication()
+	void launchApplication()
 	{
 		System.out.println("RC : Launch Application from RC");
 		//We have to write the required selenium code to launch the application

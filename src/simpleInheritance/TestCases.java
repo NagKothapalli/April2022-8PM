@@ -4,11 +4,11 @@ import org.junit.Test;
 //            Base/child       parent/super -> Simple Inheritance
 public class TestCases extends ReusableComponents
 {
-	void launchApplication()
-	{
-		System.out.println("RC : Launch Application from TC");
-		//We have to write the required selenium code to launch the application
-	}
+	/*
+	 * void launchApplication() {
+	 * System.out.println("RC : Launch Application from TC"); //We have to write the
+	 * required selenium code to launch the application }
+	 */
 	//launch , login , compose , send , logout , close
 	@Test
 	public void composeAndSendAnEmail()

@@ -2,7 +2,7 @@ package multilevelInheritance;
 
 import org.junit.Test;
 //             A        extends   B        extends  C  : A inherits C
-public class TestSuites extends TestCases
+public class TestSuites extends TestCases//,ReusableComponents
 {
 	@Test
 	public void smokeSuite()

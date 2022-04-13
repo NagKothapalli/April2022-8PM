@@ -7,7 +7,9 @@ public class TestCases //extends ReusableComponents
 	//Modifier  DataType name = value;
 	public int stdNum = 22;
 	//Modifier ClassName   objName = new Constructor();
-	public ReusableComponents rc  = new ReusableComponents();
+	//public ReusableComponents rc  = new ReusableComponents();
+	public ReusableComponents rc  = new ReusableComponents("chrome");
+	//public ReusableComponents rc  = new ReusableComponents("chrome",100);
 
 	/*
 	 * void launchApplication() {

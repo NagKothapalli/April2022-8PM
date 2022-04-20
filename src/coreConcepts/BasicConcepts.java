@@ -4,10 +4,7 @@ package coreConcepts;
 //Signature of Class : Modifier   class   Name{   Body - Members : variables / functions  }
 public class BasicConcepts 
 {
-	public BasicConcepts()
-	{
-		
-	}
+	
  //Body : Variables , Functions/Methods
 	//A variable is a container which will hold some data in run time.
 //Signature of variable : Modifier[opt]   DataType   Name ; - Declaration

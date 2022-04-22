@@ -1,5 +1,7 @@
 package seleniumPractice;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -37,7 +39,105 @@ public class GmailAutomation
 		emailObj.click();
 		emailObj.sendKeys("dfdsfdfsfdsfsd");
 		emailObj.clear();
-		emailObj.sendKeys("nag022@gmail.com");		
+		emailObj.sendKeys("nag022@gmail.com");
+		emailObj.clear();
+		driver.findElement(By.id("identifierId")).sendKeys("nag022");
+		driver.findElement(By.className("VfPpkd-vQzf8d")).click();
 	}
+	//org.openqa.selenium.NoSuchElementException
+	@Test
+	public void forgotEmail()
+	{
+		System.out.println("Test Case : Forgot Email");
+		launchApplication();
+		driver.findElement(By.tagName("button")).click();
+	}
+	@Test
+	public void learnMore()
+	{
+		System.out.println("Test Case : Learn More");
+		launchApplication();
+		driver.findElement(By.tagName("a")).click();
+	}
+	@Test
+	public void createAccount()
+	{
+		System.out.println("Test Case : Create Account");
+		launchApplication();
+		List<WebElement> elements = driver.findElements(By.className("VfPpkd-vQzf8d"));		
+		for(int i=0;i<elements.size();i++)
+		{
+			WebElement element = elements.get(i);
+			String txt = element.getText();
+			System.out.println("Text on the element :" + txt);
+			if(txt.equals("Create account"))
+			{
+				element.click();
+				break;
+			}
+		}
+	}
+	@Test
+	public void clickOnTerms()
+	{
+		System.out.println("Test Case : Click on Terms");
+		launchApplication();
+		List<WebElement> elements = driver.findElements(By.tagName("a"));		
+		for(int i=0;i<elements.size();i++)
+		{
+			WebElement element = elements.get(i);
+			String txt = element.getText();
+			System.out.println("Text on the element :" + txt);
+			if(txt.equals("Terms"))
+			{
+				element.click();
+				break;
+			}
+		}
+	}
+	@Test
+	public void clickOnPrivacy()
+	{
+		System.out.println("Test Case : Click on Privacy");
+		launchApplication();
+		List<WebElement> elements = driver.findElements(By.tagName("a"));		
+		for(int i=0;i<elements.size();i++)
+		{
+			WebElement element = elements.get(i);
+			String txt = element.getText();
+			System.out.println("Text on the element :" + txt);
+			if(txt.equals("Privacy"))
+			{
+				element.click();
+				break;
+			}
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

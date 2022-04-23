@@ -30,6 +30,11 @@ public class GmailAutomation
 		System.out.println("Session ID of the window : " + sessionID);
 		Assert.assertEquals(expectedValue, actualValue);
 	}
+	//Locators/Selectors in Selenium : ID , NAME , CLASS , CSS , LINKTEXT , PARTIALLINKTEXT , TAGNAME , XPATH
+	//XPATH : 
+			//Absolute / Fixed / Static 
+			//Relative
+			//Dynamic
 	@Test
 	public void loginToApplication()
 	{
@@ -57,7 +62,38 @@ public class GmailAutomation
 	{
 		System.out.println("Test Case : Learn More");
 		launchApplication();
-		driver.findElement(By.tagName("a")).click();
+		//driver.findElement(By.tagName("a")).click();
+		//driver.findElement(By.linkText("Learn more")).click();
+		driver.findElement(By.partialLinkText("Learn")).click();
+	}
+	@Test
+	public void getAllLinksInThePage()
+	{
+		System.out.println("Test Case : GetAllLinksInThePage");
+		launchApplication();
+		List<WebElement> allLinks = driver.findElements(By.tagName("a"));
+		System.out.println("Total Links :" + allLinks.size());
+		for(int i=0;i<allLinks.size();i++)
+		{
+			System.out.println(allLinks.get(i).getText());
+			System.out.println("All Link URLs :" + allLinks.get(i).getAttribute("href"));
+		}
+	}
+	@Test
+	public void getAllImagesInThePage() throws InterruptedException
+	{
+		System.out.println("Test Case : GetAllImagesInThePage");
+		//launchApplication();
+		driver.get("https://www.apsrtconline.in/");
+		List<WebElement> allLinks = driver.findElements(By.tagName("img"));
+		System.out.println("Total Links :" + allLinks.size());
+		for(int i=0;i<allLinks.size();i++)
+		{
+			System.out.println(allLinks.get(i).getText());
+			System.out.println("All Image URLs :" + allLinks.get(i).getAttribute("src"));
+			//driver.get(allLinks.get(i).getAttribute("src"));
+			Thread.sleep(2000);
+		}
 	}
 	@Test
 	public void createAccount()

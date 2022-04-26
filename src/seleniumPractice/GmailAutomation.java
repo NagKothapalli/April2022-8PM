@@ -50,12 +50,21 @@ public class GmailAutomation
 		driver.findElement(By.className("VfPpkd-vQzf8d")).click();
 	}
 	//org.openqa.selenium.NoSuchElementException
+	//Relative Xpath
+	  //tagName[@attribute = 'value123']       //tagName[contains(@attribute,' partial value')]
+	  //tagName[text()='1123value']            //tagName[contains(text(),'partial value')]
+	 //*[@attribute = 'value123']       //*[contains(@attribute,' partial value')]
+	  //*[text()='1123value']            //*[contains(text(),'partial value')]
 	@Test
 	public void forgotEmail()
 	{
 		System.out.println("Test Case : Forgot Email");
 		launchApplication();
-		driver.findElement(By.tagName("button")).click();
+		//driver.findElement(By.tagName("button")).click();
+		//Absolute / static / full xpath :
+		// /html/body/div[1]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[1]/div/form/span/section/div/div/div[3]/button
+		//driver.findElement(By.xpath("/html/body/div[1]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[1]/div/form/span/section/div/div/div[3]/button")).click();
+		driver.findElement(By.xpath("//button[@jsname='Cuz2Ue']")).click();
 	}
 	@Test
 	public void learnMore()
@@ -100,36 +109,29 @@ public class GmailAutomation
 	{
 		System.out.println("Test Case : Create Account");
 		launchApplication();
-		List<WebElement> elements = driver.findElements(By.className("VfPpkd-vQzf8d"));		
-		for(int i=0;i<elements.size();i++)
-		{
-			WebElement element = elements.get(i);
-			String txt = element.getText();
-			System.out.println("Text on the element :" + txt);
-			if(txt.equals("Create account"))
-			{
-				element.click();
-				break;
-			}
-		}
+		//driver.findElement(By.xpath("//span[text()='Create account']")).click();
+		//driver.findElement(By.xpath("//span[contains(text(),'Create')]")).click();
+		driver.findElement(By.xpath("//*[text()='Create account']")).click();
+		/*
+		 * List<WebElement> elements =
+		 * driver.findElements(By.className("VfPpkd-vQzf8d")); for(int
+		 * i=0;i<elements.size();i++) { WebElement element = elements.get(i); String txt
+		 * = element.getText(); System.out.println("Text on the element :" + txt);
+		 * if(txt.equals("Create account")) { element.click(); break; } }
+		 */
 	}
 	@Test
 	public void clickOnTerms()
 	{
 		System.out.println("Test Case : Click on Terms");
 		launchApplication();
-		List<WebElement> elements = driver.findElements(By.tagName("a"));		
-		for(int i=0;i<elements.size();i++)
-		{
-			WebElement element = elements.get(i);
-			String txt = element.getText();
-			System.out.println("Text on the element :" + txt);
-			if(txt.equals("Terms"))
-			{
-				element.click();
-				break;
-			}
-		}
+		driver.findElement(By.xpath("//a[text()='Terms']")).click();
+		/*
+		 * List<WebElement> elements = driver.findElements(By.tagName("a")); for(int
+		 * i=0;i<elements.size();i++) { WebElement element = elements.get(i); String txt
+		 * = element.getText(); System.out.println("Text on the element :" + txt);
+		 * if(txt.equals("Terms")) { element.click(); break; } }
+		 */
 	}
 	@Test
 	public void clickOnPrivacy()

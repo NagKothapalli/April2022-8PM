@@ -2,6 +2,7 @@ package seleniumPractice;
 
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -18,7 +19,7 @@ public class GmailAutomation
 		System.setProperty("webdriver.chrome.driver", "D:\\Softwares\\JarFiles\\chromedriver-win32-90\\chromedriver.exe");
 		driver = new ChromeDriver();//It will open an empty google chrome browser  ,SessionID = 1234
 	}
-	@Test
+	@Before
 	public void launchApplication()
 	{
 		System.out.println("RC : Launch Application");		
@@ -35,10 +36,10 @@ public class GmailAutomation
 			//Absolute / Fixed / Static 
 			//Relative
 			//Dynamic
-	@Test
+	@Test  //1
 	public void loginToApplication()
 	{
-		launchApplication();
+		//launchApplication();
 		System.out.println("RC : Login To Application");
 		WebElement emailObj = driver.findElement(By.name("identifier")); //1234.
 		emailObj.click();
@@ -46,40 +47,55 @@ public class GmailAutomation
 		emailObj.clear();
 		emailObj.sendKeys("nag022@gmail.com");
 		emailObj.clear();
-		driver.findElement(By.id("identifierId")).sendKeys("nag022");
+		//driver.findElement(By.className("whsOnd zHQkBf")).sendKeys("compoundclassname@abc.com");
+		driver.findElement(By.cssSelector(".whsOnd")).sendKeys("compoundclassname@abc.com");
+		//driver.findElement(By.id("identifierId")).sendKeys("nag022");
+		driver.findElement(By.xpath("//input[@type='email' and @name='identifier']")).sendKeys("nag022");
+		emailObj.clear();
+		driver.findElement(By.xpath("//input[@type='email' or @name='identifier']")).sendKeys("nag02234");
 		driver.findElement(By.className("VfPpkd-vQzf8d")).click();
 	}
 	//org.openqa.selenium.NoSuchElementException
+	//InvalidSelectorException: Compound class names not permitted
 	//Relative Xpath
 	  //tagName[@attribute = 'value123']       //tagName[contains(@attribute,' partial value')]
 	  //tagName[text()='1123value']            //tagName[contains(text(),'partial value')]
 	 //*[@attribute = 'value123']       //*[contains(@attribute,' partial value')]
 	  //*[text()='1123value']            //*[contains(text(),'partial value')]
-	@Test
+	
+	 //tagName[@attribute = 'value123' and @att2='value']       //tagName[contains(@attribute,' partial value') and contains(@attribute2,' partial value')]
+	  //tagName[text()='1123value' and contains(@attribute,' partial value')]            //tagName[contains(text(),'partial value')]
+	 //*[@attribute = 'value123' and contains(@attribute,' partial value')]       //*[contains(@attribute1,' partial value') and @attribute2 = 'value123']
+	
+	 //tagName[@attribute = 'value123' or @att2='value']       //tagName[contains(@attribute,' partial value') or contains(@attribute2,' partial value')]
+	  //tagName[text()='1123value' or contains(@attribute,' partial value')]           
+	 //*[@attribute = 'value123' or contains(@attribute,' partial value')]       //*[contains(@attribute1,' partial value') or @attribute2 = 'value123']
+	 
+	@Test  //2
 	public void forgotEmail()
 	{
 		System.out.println("Test Case : Forgot Email");
-		launchApplication();
+		//launchApplication();
 		//driver.findElement(By.tagName("button")).click();
 		//Absolute / static / full xpath :
 		// /html/body/div[1]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[1]/div/form/span/section/div/div/div[3]/button
 		//driver.findElement(By.xpath("/html/body/div[1]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[1]/div/form/span/section/div/div/div[3]/button")).click();
 		driver.findElement(By.xpath("//button[@jsname='Cuz2Ue']")).click();
 	}
-	@Test
+	@Test  //3
 	public void learnMore()
 	{
 		System.out.println("Test Case : Learn More");
-		launchApplication();
+		//launchApplication();
 		//driver.findElement(By.tagName("a")).click();
 		//driver.findElement(By.linkText("Learn more")).click();
 		driver.findElement(By.partialLinkText("Learn")).click();
 	}
-	@Test
+	@Test //4
 	public void getAllLinksInThePage()
 	{
 		System.out.println("Test Case : GetAllLinksInThePage");
-		launchApplication();
+		//launchApplication();
 		List<WebElement> allLinks = driver.findElements(By.tagName("a"));
 		System.out.println("Total Links :" + allLinks.size());
 		for(int i=0;i<allLinks.size();i++)
@@ -104,11 +120,11 @@ public class GmailAutomation
 			Thread.sleep(2000);
 		}
 	}
-	@Test
+	@Test  //5
 	public void createAccount()
 	{
 		System.out.println("Test Case : Create Account");
-		launchApplication();
+		//launchApplication();
 		//driver.findElement(By.xpath("//span[text()='Create account']")).click();
 		//driver.findElement(By.xpath("//span[contains(text(),'Create')]")).click();
 		driver.findElement(By.xpath("//*[text()='Create account']")).click();
@@ -120,11 +136,11 @@ public class GmailAutomation
 		 * if(txt.equals("Create account")) { element.click(); break; } }
 		 */
 	}
-	@Test
+	@Test  //6
 	public void clickOnTerms()
 	{
 		System.out.println("Test Case : Click on Terms");
-		launchApplication();
+		//launchApplication();
 		driver.findElement(By.xpath("//a[text()='Terms']")).click();
 		/*
 		 * List<WebElement> elements = driver.findElements(By.tagName("a")); for(int
@@ -133,11 +149,11 @@ public class GmailAutomation
 		 * if(txt.equals("Terms")) { element.click(); break; } }
 		 */
 	}
-	@Test
+	@Test  //7
 	public void clickOnPrivacy()
 	{
 		System.out.println("Test Case : Click on Privacy");
-		launchApplication();
+		//launchApplication();
 		List<WebElement> elements = driver.findElements(By.tagName("a"));		
 		for(int i=0;i<elements.size();i++)
 		{

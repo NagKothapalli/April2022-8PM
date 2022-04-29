@@ -1,6 +1,8 @@
 package seleniumPractice;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,6 +37,29 @@ public class ApsrtcAutomation
 		Actions actions = new Actions(driver);
 		//actions.moveToElement(fromCity).click().sendKeys("HYDERABAD").pause(Duration.ofSeconds(1)).sendKeys(Keys.ENTER).build().perform();
 		actions.moveToElement(fromCity).click().sendKeys("HYDERABAD").pause(Duration.ofSeconds(1)).sendKeys(Keys.ENTER).pause(Duration.ofSeconds(1)).doubleClick().contextClick().build().perform();
+	}
+	//NoSuchSessionException: Session ID is null. Using WebDriver after calling quit()?
+	@Test
+	public void multipleWindows() throws InterruptedException
+	{
+		driver.findElement(By.xpath("//a[@title='TimeTable / Track']")).click();
+		driver.findElement(By.xpath("//a[text()='All services Time Table & Tracking']")).click();
+		Set<String> allwindows = driver.getWindowHandles();
+		ArrayList<String>  windows = new ArrayList<String>(allwindows);
+		for(int i=0;i<windows.size();i++)
+		{
+			System.out.println(windows.get(i));
+		}
+		driver.switchTo().window(windows.get(1));
+		String secondTitle = driver.getTitle();
+		System.out.println("Second Window :" + secondTitle );
+		driver.close();
+		//driver.quit(); //after quit method driver = null
+		driver.switchTo().window(windows.get(0));
+		System.out.println(driver.getTitle());
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//a[@title='Home']")).click();	
+		driver.quit();
 	}
 	@Test
 	public void bookTicket() throws InterruptedException

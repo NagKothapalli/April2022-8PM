@@ -1,7 +1,11 @@
 package seleniumPractice;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.Set;
 
 import org.junit.Before;
@@ -24,9 +28,50 @@ public class ApsrtcAutomation
 	
 		//div[@class='search']//input[@name='source']
 	@Before
-	public void launchApplication()
+	public void launchApplication() throws IOException
 	{
-		driver.get("https://www.apsrtconline.in/");
+		//driver.get("https://www.apsrtconline.in/"); //Hard coded URL //Dev , QA , Stage , Prod
+		driver.get(getData("URL"));
+	}
+	String name; //null
+	@Test
+	public void demonstrateUnCheckedException()
+	{
+		int ans = 44 / 0; //Run time exception | UnChecked Exception
+		String stdName = "Ram";
+		if(name.equals(stdName))  //null.equal("Ram") //Run time exception | UnChecked Exception
+		{
+			System.out.println("Both Names are same");
+		}
+		else
+		{
+			System.out.println("Both Names are not same");
+		}
+	}
+	@Test
+	public void readTestData() throws IOException   
+	{   
+		
+		FileInputStream myfile = new FileInputStream("TestData/ApsrtcDev.properties"); //Checked Exception
+		//myfile is like a news paper
+		//properties class in like news reader
+		Properties myprop = new Properties();
+		myprop.load(myfile);
+		System.out.println(myprop.getProperty("URL"));
+		System.out.println(myprop.getProperty("FromCity"));
+		System.out.println(myprop.getProperty("ToCity"));
+		String mydate = myprop.getProperty("JDate");
+		System.out.println(mydate);
+	}
+	public String getData(String mykey) throws IOException   
+	{
+		FileInputStream myfile = new FileInputStream("TestData/ApsrtcDev.properties"); //Checked Exception
+		//myfile is like a news paper
+		//properties class in like news reader
+		Properties myprop = new Properties();
+		myprop.load(myfile);
+		String myvalue = myprop.getProperty(mykey);
+		return myvalue;
 	}
 	
 	@Test
@@ -61,22 +106,24 @@ public class ApsrtcAutomation
 		driver.findElement(By.xpath("//a[@title='Home']")).click();	
 		driver.quit();
 	}
+	//.properties    , .txt , .doc ,.xls  , .xml , .json
 	@Test
-	public void bookTicket() throws InterruptedException
+	public void bookTicket() throws InterruptedException, IOException
 	{
 		System.out.println("Test Case : Book Ticket");
-		driver.findElement(By.xpath("//div[@class='search']//input[@name='source']")).sendKeys("HYDERABAD");
+		driver.findElement(By.xpath("//div[@class='search']//input[@name='source']")).sendKeys(getData("FromCity")); //Hard coded
 		Actions actions = new Actions(driver);
 		Thread.sleep(1000);
 		actions.sendKeys(Keys.ENTER).build().perform();
 		driver.findElement(By.xpath("//input[@value='Check Availability']")).click();
 		driver.switchTo().alert().accept();
-		driver.findElement(By.xpath("//input[@name='destination']")).sendKeys("GUNTUR");
+		//driver.findElement(By.xpath("//input[@name='destination']")).sendKeys("GUNTUR"); //Hard coded
+		driver.findElement(By.xpath("//input[@name='destination']")).sendKeys(getData("ToCity"));
 		Thread.sleep(1000);
 		actions.sendKeys(Keys.ENTER).build().perform();	
 		//select date
 		driver.findElement(By.xpath("//input[@name='txtJourneyDate']")).click();
-		selectDate("4");
+		selectDate(getData("JDate")); //hard coded
 		driver.findElement(By.xpath("//input[@value='Check Availability']")).click();
 	}
 	//Dynamic Xpath

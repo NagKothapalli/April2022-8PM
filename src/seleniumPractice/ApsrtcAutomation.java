@@ -15,14 +15,16 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
-public class ApsrtcAutomation
+public class ApsrtcAutomation //extends ReadProperties
 {
 	String expectedValue = "Gmail";
 	ChromeDriver driver; //null
+	ReadProperties prop;
 	public ApsrtcAutomation()
 	{
 		System.setProperty("webdriver.chrome.driver", "D:\\Softwares\\JarFiles\\chromedriver-win32-90\\chromedriver.exe");
 		driver = new ChromeDriver();//It will open an empty google chrome browser  ,SessionID = 1234
+		prop = new ReadProperties("TestData/ApsrtcDev.properties");
 	}
 	//Relative Xpath with parent child relationship
 	
@@ -31,7 +33,7 @@ public class ApsrtcAutomation
 	public void launchApplication() throws IOException
 	{
 		//driver.get("https://www.apsrtconline.in/"); //Hard coded URL //Dev , QA , Stage , Prod
-		driver.get(getData("URL"));
+		driver.get(prop.getData("URL"));
 	}
 	String name; //null
 	@Test
@@ -63,16 +65,7 @@ public class ApsrtcAutomation
 		String mydate = myprop.getProperty("JDate");
 		System.out.println(mydate);
 	}
-	public String getData(String mykey) throws IOException   
-	{
-		FileInputStream myfile = new FileInputStream("TestData/ApsrtcDev.properties"); //Checked Exception
-		//myfile is like a news paper
-		//properties class in like news reader
-		Properties myprop = new Properties();
-		myprop.load(myfile);
-		String myvalue = myprop.getProperty(mykey);
-		return myvalue;
-	}
+	
 	
 	@Test
 	public void keyboard() throws InterruptedException
@@ -111,20 +104,50 @@ public class ApsrtcAutomation
 	public void bookTicket() throws InterruptedException, IOException
 	{
 		System.out.println("Test Case : Book Ticket");
-		driver.findElement(By.xpath("//div[@class='search']//input[@name='source']")).sendKeys(getData("FromCity")); //Hard coded
+		driver.findElement(By.xpath("//div[@class='search']//input[@name='source']")).sendKeys(prop.getData("FromCity")); //Hard coded
 		Actions actions = new Actions(driver);
 		Thread.sleep(1000);
 		actions.sendKeys(Keys.ENTER).build().perform();
 		driver.findElement(By.xpath("//input[@value='Check Availability']")).click();
 		driver.switchTo().alert().accept();
 		//driver.findElement(By.xpath("//input[@name='destination']")).sendKeys("GUNTUR"); //Hard coded
-		driver.findElement(By.xpath("//input[@name='destination']")).sendKeys(getData("ToCity"));
+		driver.findElement(By.xpath("//input[@name='destination']")).sendKeys(prop.getData("ToCity"));
 		Thread.sleep(1000);
 		actions.sendKeys(Keys.ENTER).build().perform();	
 		//select date
 		driver.findElement(By.xpath("//input[@name='txtJourneyDate']")).click();
-		selectDate(getData("JDate")); //hard coded
+		selectDate(prop.getData("JDate")); //hard coded
 		driver.findElement(By.xpath("//input[@value='Check Availability']")).click();
+	}
+	@Test
+	public void bookTicket_DataDriven() throws InterruptedException, IOException
+	{
+		String cities = prop.getData("FromCities").trim();
+		String[] fromcities = cities.split(",");
+		String[] tocities = prop.getData("ToCities").trim().split(",");
+		String[] jDates = prop.getData("JDates").trim().split(",");
+		for(int i=0;i<fromcities.length;i++)
+		{
+			System.out.println("Iteration :" + (i+1));
+			System.out.println("Test Case : Book Ticket");
+			driver.findElement(By.xpath("//div[@class='search']//input[@name='source']")).sendKeys(fromcities[i]); //Hard coded
+			Actions actions = new Actions(driver);
+			Thread.sleep(1000);
+			actions.sendKeys(Keys.ENTER).build().perform();
+			driver.findElement(By.xpath("//input[@value='Check Availability']")).click();
+			driver.switchTo().alert().accept();
+			//driver.findElement(By.xpath("//input[@name='destination']")).sendKeys("GUNTUR"); //Hard coded
+			driver.findElement(By.xpath("//input[@name='destination']")).sendKeys(tocities[i]);
+			Thread.sleep(1000);
+			actions.sendKeys(Keys.ENTER).build().perform();	
+			//select date
+			driver.findElement(By.xpath("//input[@name='txtJourneyDate']")).click();
+			selectDate(jDates[i]); //hard coded
+			driver.findElement(By.xpath("//input[@value='Check Availability']")).click();
+			Thread.sleep(2000);
+			driver.findElement(By.xpath("//a[@title='Home']")).click();	
+		}
+		
 	}
 	//Dynamic Xpath
 	public void selectDate(String jDate)

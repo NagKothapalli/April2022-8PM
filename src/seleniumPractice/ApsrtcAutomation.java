@@ -7,6 +7,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,18 +16,23 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 public class ApsrtcAutomation //extends ReadProperties
 {
 	String expectedValue = "Gmail";
 	ChromeDriver driver; //null
 	ReadProperties prop;
 	ApplicationUtilities utils;
+	WebDriverWait  wait ;
 	public ApsrtcAutomation()
 	{
 		System.setProperty("webdriver.chrome.driver", "D:\\Softwares\\JarFiles\\chromedriver-win32-90\\chromedriver.exe");
 		driver = new ChromeDriver();//It will open an empty google chrome browser  ,SessionID = 1234
 		prop = new ReadProperties("TestData/ApsrtcDev.properties");
 		utils = new ApplicationUtilities(driver);
+		//driver.manage().timeouts().implicitlyWait(25, TimeUnit.SECONDS);
+		wait = new WebDriverWait(driver, Duration.ofSeconds(25));
 	}
 	//Relative Xpath with parent child relationship
 	
@@ -36,8 +42,21 @@ public class ApsrtcAutomation //extends ReadProperties
 	{
 		//driver.get("https://www.apsrtconline.in/"); //Hard coded URL //Dev , QA , Stage , Prod
 		String myurl = prop.getData("URL");
-		driver.get(myurl);
-		//driver.get(prop.getData("URL"));
+		//driver.get(myurl);
+		driver.get(prop.getData("URL"));
+	}	
+	
+	@Test
+	public void synchronization() throws InterruptedException, IOException
+	{
+		System.out.println("Test Case : Book Ticket");
+		//Thread.sleep(25000);
+		//wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@name='source']")));
+		//driver.findElement(By.xpath("//div[@class='search']//input[@name='source']")).sendKeys(prop.getData("FromCity")); //Hard coded
+		//Actions actions = new Actions(driver);
+		utils.typeText("//input[@name='source']","GUNTUR");
+		utils.typeText("//input[@name='destination']","HYDERABAD");
+		utils.clickElement("//input[@value='Check Availability']");
 	}
 	String name; //null
 	@Test
@@ -76,6 +95,8 @@ public class ApsrtcAutomation //extends ReadProperties
 	{
 		System.out.println("Test Case : Book Ticket");
 		WebElement fromCity = driver.findElement(By.xpath("//div[@class='search']//input[@name='source']"));
+		utils.doubleClick(fromCity);
+		utils.rightClick(fromCity);
 		Actions actions = new Actions(driver);
 		//actions.moveToElement(fromCity).click().sendKeys("HYDERABAD").pause(Duration.ofSeconds(1)).sendKeys(Keys.ENTER).build().perform();
 		actions.moveToElement(fromCity).click().sendKeys("HYDERABAD").pause(Duration.ofSeconds(1)).sendKeys(Keys.ENTER).pause(Duration.ofSeconds(1)).doubleClick().contextClick().build().perform();

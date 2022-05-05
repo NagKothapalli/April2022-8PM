@@ -5,8 +5,7 @@ import java.util.Arrays;
 import org.junit.Test;
 
 public class MyArrays
-{
-	
+{	
 	//fixed array
 	  //Modifier  DataType   name = value;
 		public String stdName = "Ram";

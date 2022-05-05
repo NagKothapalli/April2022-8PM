@@ -20,11 +20,13 @@ public class ApsrtcAutomation //extends ReadProperties
 	String expectedValue = "Gmail";
 	ChromeDriver driver; //null
 	ReadProperties prop;
+	ApplicationUtilities utils;
 	public ApsrtcAutomation()
 	{
 		System.setProperty("webdriver.chrome.driver", "D:\\Softwares\\JarFiles\\chromedriver-win32-90\\chromedriver.exe");
 		driver = new ChromeDriver();//It will open an empty google chrome browser  ,SessionID = 1234
 		prop = new ReadProperties("TestData/ApsrtcDev.properties");
+		utils = new ApplicationUtilities(driver);
 	}
 	//Relative Xpath with parent child relationship
 	
@@ -33,7 +35,9 @@ public class ApsrtcAutomation //extends ReadProperties
 	public void launchApplication() throws IOException
 	{
 		//driver.get("https://www.apsrtconline.in/"); //Hard coded URL //Dev , QA , Stage , Prod
-		driver.get(prop.getData("URL"));
+		String myurl = prop.getData("URL");
+		driver.get(myurl);
+		//driver.get(prop.getData("URL"));
 	}
 	String name; //null
 	@Test
@@ -105,15 +109,17 @@ public class ApsrtcAutomation //extends ReadProperties
 	{
 		System.out.println("Test Case : Book Ticket");
 		driver.findElement(By.xpath("//div[@class='search']//input[@name='source']")).sendKeys(prop.getData("FromCity")); //Hard coded
-		Actions actions = new Actions(driver);
+		//Actions actions = new Actions(driver);
 		Thread.sleep(1000);
-		actions.sendKeys(Keys.ENTER).build().perform();
+		//actions.sendKeys(Keys.ENTER).build().perform();
+		utils.clickEnter();
 		driver.findElement(By.xpath("//input[@value='Check Availability']")).click();
 		driver.switchTo().alert().accept();
 		//driver.findElement(By.xpath("//input[@name='destination']")).sendKeys("GUNTUR"); //Hard coded
 		driver.findElement(By.xpath("//input[@name='destination']")).sendKeys(prop.getData("ToCity"));
 		Thread.sleep(1000);
-		actions.sendKeys(Keys.ENTER).build().perform();	
+		//actions.sendKeys(Keys.ENTER).build().perform();	
+		utils.clickEnter();
 		//select date
 		driver.findElement(By.xpath("//input[@name='txtJourneyDate']")).click();
 		selectDate(prop.getData("JDate")); //hard coded

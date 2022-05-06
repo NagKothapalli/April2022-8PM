@@ -14,13 +14,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class ApplicationUtilities
 {
 	//click Enter , Click Tab  , Double Click , Right Click , MouseHover etc.....
-	WebDriver driver;
+	WebDriver driver; //null
 	Actions actions;
-	WebDriverWait wait;
+	WebDriverWait wait;	
+	String name; //null
 	public ApplicationUtilities(WebDriver driver) //1234
 	{
+		this.driver = driver;
 		//System.setProperty("webdriver.chrome.driver", "D:\\Softwares\\JarFiles\\chromedriver-win32-90\\chromedriver.exe");
 		//driver = new ChromeDriver(); //5678
+		System.out.println(name); //null
 		actions = new Actions(driver); //1234
 		wait = new WebDriverWait(driver, Duration.ofSeconds(25));
 	}
